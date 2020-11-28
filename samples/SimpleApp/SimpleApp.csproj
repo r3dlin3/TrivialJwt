@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SimpleJwt.AspNetIdentity\SimpleJwt.AspNetIdentity.csproj" />
+    <ProjectReference Include="..\..\src\SimpleJwt.Bearer\SimpleJwt.Bearer.csproj" />
+    <ProjectReference Include="..\..\src\SimpleJwt\SimpleJwt.csproj" />
+  </ItemGroup>
+
+</Project>
