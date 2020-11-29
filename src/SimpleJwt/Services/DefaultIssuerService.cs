@@ -23,7 +23,7 @@ namespace SimpleJwt.Services
             if (string.IsNullOrEmpty(_options.Issuer))
             {
                 var request = _contextAccessor.HttpContext.Request;
-                var builder = new UriBuilder(request.Scheme, request.Host.Value);
+                var builder = new UriBuilder(request.Scheme, request.Host.Host, request.Host.Port.Value);
                 builder.Path = request.PathBase;
                 return builder.ToString();
             }
