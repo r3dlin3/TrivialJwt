@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using SimpleJwt.Models;
 using SimpleJwt.Services;
 using System;
@@ -17,12 +18,16 @@ namespace SimpleJwt.Controllers
         private readonly  IPasswordValidator _passwordChecker;
         private readonly  IClaimsIdentityProvider _claimsIdentityProvider;
         private readonly  ITokenService _tokenService;
+        private readonly SimpleJwtOptions _options;
 
-        public AuthController(IPasswordValidator passwordChecker, IClaimsIdentityProvider claimsIdentityProvider, ITokenService tokenService)
+        public AuthController(IPasswordValidator passwordChecker, 
+            IClaimsIdentityProvider claimsIdentityProvider, 
+            ITokenService tokenService, IOptions<SimpleJwtOptions> options)
         {
             _passwordChecker = passwordChecker;
             _claimsIdentityProvider = claimsIdentityProvider;
             _tokenService = tokenService;
+            _options = options.Value;
         }
 
 
@@ -36,7 +41,10 @@ namespace SimpleJwt.Controllers
 
             ClaimsIdentity user = await _claimsIdentityProvider.CreateAsync(result.GetUsername());
             string token = await _tokenService.GenerateTokenAsync(user);
-            var response = new TokenResponse() { AccessToken = token };
+            var response = new TokenResponse() { 
+                AccessToken = token,
+                AccessTokenLifetime = _options.AccessTokenLifetime,
+            };
             return new TokenResult(response);
         }
     }
