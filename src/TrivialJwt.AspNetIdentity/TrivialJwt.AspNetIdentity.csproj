@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>r3dLiN3</Authors>
+    <Description>A Trivial package to generate token based on AspNetIdentity</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/r3dlin3/TrivialJwt</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/r3dlin3/TrivialJwt</RepositoryUrl>
+    <PackageTags>AspNetIdentity, Jwt, ASP.NET, Identity, TrivialJwt</PackageTags>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +19,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrivialJwt\TrivialJwt.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

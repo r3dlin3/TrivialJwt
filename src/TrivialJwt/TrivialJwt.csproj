@@ -3,6 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
+    <Version>0.1.0</Version>
+    <Authors>r3dLiN3</Authors>
+    <Description>A Trivial package to generate token</Description>
+    <RepositoryUrl>https://github.com/r3dlin3/TrivialJwt</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/r3dlin3/TrivialJwt</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageTags>ASP.NET Core, Jwt</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +20,13 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
     <PackageReference Include="System.Text.Json" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

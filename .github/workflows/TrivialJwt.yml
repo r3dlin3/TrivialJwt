@@ -1,11 +1,5 @@
 name: .NET Core
 
-on:
-  push:
-    branches: [ ]
-  pull_request:
-    branches: [ ]
-
 jobs:
   build:
 
@@ -24,5 +18,7 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     - name: Pack
-      run: dotnet pack --configuration Release --no-restore src/TrivialJwt/TrivialJwt.csproj
+      run: dotnet pack --configuration Release --no-restore --nologo -o src/TrivialJwt/pack src/TrivialJwt/TrivialJwt.csproj 
+    - name: Push to nuget
+      run: dotnet nuget push 'src/TrivialJwt/pack/*.nupkg' --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json 
       
