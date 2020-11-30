@@ -1,18 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using SimpleJwt;
-using SimpleJwt.AspNetIdentity;
+using SimpleJwt.Bearer;
 using SimpleJwt.Extensions;
 using SimpleJwt.Services;
+using System;
 
 namespace SimpleApp
 {
@@ -30,10 +27,14 @@ namespace SimpleApp
         {
             services.AddControllersWithViews();
 
-            services.AddSimpleJwt(o => o.Secret = "U3VwZXJfU2VjcmV0X1Bhc3N3b3JkIQ==");
-            
+            services.AddSimpleJwt(Configuration.GetSection(SimpleJwtOptions.Section));
+            services.AddSimpleJwtAuthentication();
+
             services.AddScoped<IPasswordValidator, PasswordValidator>();
             services.AddScoped<IClaimsIdentityProvider, ClaimsIdentityProvider>();
+
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,8 +54,9 @@ namespace SimpleApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {

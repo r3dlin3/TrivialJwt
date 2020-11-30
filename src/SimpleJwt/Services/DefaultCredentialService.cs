@@ -33,5 +33,11 @@ namespace SimpleJwt.Services
         {
             return new SigningCredentials(_key, _options.SigningAlgorithm);
         }
+
+        public async Task<SecurityKey> GetSecurityKeyAsync()
+        {
+            return _key;
+        }
+
     }
 }

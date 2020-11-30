@@ -5,6 +5,7 @@ namespace SimpleJwt.Services
 {
     public interface ICredentialService
     {
+        Task<SecurityKey> GetSecurityKeyAsync();
         Task<SigningCredentials> GetSigningCredentialsAsync();
     }
 }
