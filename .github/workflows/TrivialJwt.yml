@@ -9,7 +9,7 @@ on:
     branches: [ main ]
     paths:
       - src/TrivialJwt
-
+  workflow_dispatch:
 jobs:
   build:
 
