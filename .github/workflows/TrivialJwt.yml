@@ -1,4 +1,14 @@
-name: .NET Core
+name: TrivialJwt NuGet Push
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - src/TrivialJwt
+  pull_request:
+    branches: [ main ]
+    paths:
+      - src/TrivialJwt
 
 jobs:
   build:
