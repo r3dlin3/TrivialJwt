@@ -5,10 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using SimpleJwt;
-using SimpleJwt.Bearer;
-using SimpleJwt.Extensions;
-using SimpleJwt.Services;
+using TrivialJwt;
+using TrivialJwt.Bearer;
+using TrivialJwt.Extensions;
+using TrivialJwt.Services;
 using System;
 
 namespace SimpleApp
@@ -27,8 +27,8 @@ namespace SimpleApp
         {
             services.AddControllersWithViews();
 
-            services.AddSimpleJwt(Configuration.GetSection(SimpleJwtOptions.Section));
-            services.AddSimpleJwtAuthentication();
+            services.AddTrivialJwt(Configuration.GetSection(TrivialJwtOptions.Section));
+            services.AddTrivialJwtAuthentication();
 
             services.AddScoped<IPasswordValidator, PasswordValidator>();
             services.AddScoped<IClaimsIdentityProvider, ClaimsIdentityProvider>();

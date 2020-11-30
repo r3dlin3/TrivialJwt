@@ -1,5 +1,5 @@
-﻿using SimpleJwt;
-using SimpleJwt.Services;
+﻿using TrivialJwt;
+using TrivialJwt.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

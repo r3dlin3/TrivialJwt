@@ -9,9 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SimpleJwt.AspNetIdentity\SimpleJwt.AspNetIdentity.csproj" />
-    <ProjectReference Include="..\..\src\SimpleJwt.Bearer\SimpleJwt.Bearer.csproj" />
-    <ProjectReference Include="..\..\src\SimpleJwt\SimpleJwt.csproj" />
+    <ProjectReference Include="..\..\src\TrivialJwt.AspNetIdentity\TrivialJwt.AspNetIdentity.csproj" />
+    <ProjectReference Include="..\..\src\TrivialJwt.Bearer\TrivialJwt.Bearer.csproj" />
+    <ProjectReference Include="..\..\src\TrivialJwt\TrivialJwt.csproj" />
   </ItemGroup>
 
 </Project>

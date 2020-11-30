@@ -1,6 +1,6 @@
-﻿using SimpleJwt;
-using SimpleJwt.Models;
-using SimpleJwt.Services;
+﻿using TrivialJwt;
+using TrivialJwt.Models;
+using TrivialJwt.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
