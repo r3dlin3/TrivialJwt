@@ -15,7 +15,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_NOLOGO: true
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -29,7 +31,7 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     - name: Pack
-      run: dotnet pack --configuration Release --no-restore --nologo -o src/TrivialJwt/pack src/TrivialJwt/TrivialJwt.csproj 
+      run: dotnet pack --configuration Release --no-restore -o src/TrivialJwt/pack src/TrivialJwt/TrivialJwt.csproj 
     - name: Push to nuget
       run: dotnet nuget push 'src/TrivialJwt/pack/*.nupkg' --api-key '${{secrets.NUGET_KEY}}' --source https://api.nuget.org/v3/index.json 
       
