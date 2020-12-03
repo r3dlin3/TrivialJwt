@@ -4,6 +4,7 @@ using TrivialJwt.Models;
 using TrivialJwt.Services;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace TrivialJwt.AspNetIdentity
 {
@@ -16,17 +17,17 @@ namespace TrivialJwt.AspNetIdentity
 
         public UserRetriever(
             UserManager<TUser> userManager,
-            TrivialJwtOptions options,
+            IOptions<TrivialJwtOptions> options,
             ILogger<UserRetriever<TUser>> logger)
         {
             _userManager = userManager;
-            _options = options;
+            _options = options.Value;
             _logger = logger;
         }
 
         public async Task<TUser> GetUserAsync(string username)
         {
-            string method = _options.MethodRetrieval;
+            string method = _options.MethodRetrieval ?? "name";
             if (string.IsNullOrEmpty(method))
                 throw new InvalidOperationException("MethodRetrieval is not provided");
 

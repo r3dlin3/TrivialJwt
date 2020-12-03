@@ -11,7 +11,7 @@ namespace TrivialJwt.AspNetIdentity
 {
     public static class ServicesConfiguration
     {
-        public static IServiceCollection AddTrivialJwtAspNetIdentity<TUser>(this IServiceCollection services) where TUser : IdentityUser
+        private static IServiceCollection AddTrivialJwtAspNetIdentity<TUser>(this IServiceCollection services) where TUser : IdentityUser
         {
             services.AddTrivialJwt();
 

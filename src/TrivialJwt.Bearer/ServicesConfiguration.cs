@@ -9,9 +9,7 @@ namespace TrivialJwt.Bearer
     {
         public static IServiceCollection AddTrivialJwtAuthentication(this IServiceCollection services)
         {
-            //services.AddScoped<IJwtAuthentication, JwtAuthentication>(); 
             services.AddScoped<ITokenValidator, DefaultTokenValidator>(); 
-
             
             var scopeFactory = services
                     .BuildServiceProvider()
