@@ -12,10 +12,10 @@ It relies on Microsoft's libraries for JWT generation.
 
 `TrivialJWT.AspNetIdentity` implements the required interfaces to bridge `TrivialJWT` with `Microsoft.AspNetCore.Identity`.
 
-2 samples are provided: 
+2 samples are provided:
 
-- link:samples/SimpleAppAspNetIdentity[With AspNetIdentity]
-- link:samples/SimpleApp[Without AspNetIdentity]
+- [With AspNetIdentity](samples/SimpleAppAspNetIdentity)
+- [Without AspNetIdentity](samples/SimpleApp)
 
 ## How to use `TrivialJWT` with AspNetIdentity
 
@@ -26,25 +26,23 @@ In this example, `AppUser`
 
 With .NET CLI
 
-[source,bash]
-----
+```bash
 dotnet add package TrivialJwt.Bearer
 dotnet add package TrivialJwt.AspNetIdentity
-----
+```
 
 or with Package Manager:
-[source,bash]
-----
+
+```bash
 Install-Package TrivialJwt.Bearer
 Install-Package TrivialJwt.AspNetIdentity
-----
+```
 
 ### Update `Startup.cs`
 
 In the example below, a HMAC-SHA265 signature
 
-[source,csharp]
-----
+```csharp
 (...)
 using TrivialJwt;
 using TrivialJwt.AspNetIdentity;
@@ -73,27 +71,25 @@ public void Configure(IApplicationBuilder app,
 
     (...)
 }
-----
+```
 
 ## Configuration
 
 Configuration can be done by using options as shown above or by binding
-[source,csharp]
-----
+```csharp
 services.AddTrivialJwtAspNetIdentity<IdentityUser>(
     Configuration.GetSection(TrivialJwtOptions.Section));
-----
+```
 
 For instance, the `appsettings.json` can contain the configuration:
 
-[source,json]
-----
+```json
 {
     "TrivialJwt": {
         "Secret": "U3VwZXJfU2VjcmV0X1Bhc3N3b3JkIQ=="
     }
 }
-----
+```
 
 ## Token generation endpoint
 
@@ -102,24 +98,22 @@ The endpoint is `/auth/login`.
 The payload is a JSON file with `username` and `password`.
 
 Example:
-[source,json]
-----
+```json
 {
     "username": "bob",
     "password": "bob"
 }
-----
+```
 
 The response would be:
 
-[source,json]
-----
+```json
 {
     "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdW...k_Riw4RSK7g",
     "expires_in": 3600,
     "token_type": "bearer"
 }
-----
+```
 
 ## TODO
 
