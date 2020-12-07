@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\TrivialJwt.AspNetIdentity\TrivialJwt.AspNetIdentity.csproj" />
-    <ProjectReference Include="..\..\..\src\TrivialJwt.Bearer\TrivialJwt.Bearer.csproj" />
+    <ProjectReference Include="..\..\src\TrivialJwt.AspNetIdentity\TrivialJwt.AspNetIdentity.csproj" />
+    <ProjectReference Include="..\..\src\TrivialJwt.Bearer\TrivialJwt.Bearer.csproj" />
   </ItemGroup>
 
 </Project>
