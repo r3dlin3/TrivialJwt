@@ -1,14 +1,14 @@
-name: TrivialJwt NuGet Push
+name: TrivialJwt.AspNetIdentity NuGet Push
 
 on:
   push:
     branches: [ main ]
     paths:
-      - src/TrivialJwt
+      - src/TrivialJwt.AspNetIdentity
   pull_request:
     branches: [ main ]
     paths:
-      - src/TrivialJwt
+      - src/TrivialJwt.AspNetIdentity
   workflow_dispatch:
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
       DOTNET_NOLOGO: true
-      SRC_PATH: src/TrivialJwt
+      SRC_PATH: src/TrivialJwt.AspNetIdentity
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -31,7 +31,7 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     - name: Pack
-      run: dotnet pack --configuration Release --no-restore -o $SRC_PATH/pack $SRC_PATH/TrivialJwt.csproj 
+      run: dotnet pack --configuration Release --no-restore -o $SRC_PATH/pack $SRC_PATH/*.csproj 
     - name: Push to nuget
       run: dotnet nuget push '$SRC_PATH/pack/*.nupkg' --api-key '${{secrets.NUGET_KEY}}' --source https://api.nuget.org/v3/index.json 
       
