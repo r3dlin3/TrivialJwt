@@ -8,7 +8,7 @@
     <PackageProjectUrl>https://github.com/r3dlin3/TrivialJwt</PackageProjectUrl>
     <RepositoryUrl>https://github.com/r3dlin3/TrivialJwt</RepositoryUrl>
     <PackageTags>AspNetIdentity, Jwt, ASP.NET, Identity, TrivialJwt</PackageTags>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
