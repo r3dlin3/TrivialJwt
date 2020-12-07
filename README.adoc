@@ -1,0 +1,129 @@
+# TrivialJWT
+
+TrivialJWT is a set of libraries to ease:
+
+- The creation of JWT tokens
+- The validation of JWT tokens
+
+`TrivialJWT` exposes an end point to generate JWT token. 
+It relies on Microsoft's libraries for JWT generation.
+
+`TrivialJWT.Bearer` helps configure the `Microsoft.AspNetCore.Authentication.JwtBearer` library based on `TrivialJWT` configuration.
+
+`TrivialJWT.AspNetIdentity` implements the required interfaces to bridge `TrivialJWT` with `Microsoft.AspNetCore.Identity`.
+
+2 samples are provided: 
+
+- link:samples/SimpleAppAspNetIdentity[With AspNetIdentity]
+- link:samples/SimpleApp[Without AspNetIdentity]
+
+## How to use `TrivialJWT` with AspNetIdentity
+
+In this example, `AppUser`
+
+
+### Install dependencies
+
+With .NET CLI
+
+[source,bash]
+----
+dotnet add package TrivialJwt.Bearer
+dotnet add package TrivialJwt.AspNetIdentity
+----
+
+or with Package Manager:
+[source,bash]
+----
+Install-Package TrivialJwt.Bearer
+Install-Package TrivialJwt.AspNetIdentity
+----
+
+### Update `Startup.cs`
+
+In the example below, a HMAC-SHA265 signature
+
+[source,csharp]
+----
+(...)
+using TrivialJwt;
+using TrivialJwt.AspNetIdentity;
+using TrivialJwt.Bearer;
+(...)
+
+public void ConfigureServices(IServiceCollection services)
+{
+    (...)
+    services.AddTrivialJwtAspNetIdentity<IdentityUser>(options =>
+            {
+                options.Secret = "<Base64Secret>"
+            });
+
+    services.AddTrivialJwtAuthentication();
+    services.AddRazorPages();
+}
+
+public void Configure(IApplicationBuilder app, 
+                IWebHostEnvironment env)
+{
+    (...)
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    (...)
+}
+----
+
+## Configuration
+
+Configuration can be done by using options as shown above or by binding
+[source,csharp]
+----
+services.AddTrivialJwtAspNetIdentity<IdentityUser>(
+    Configuration.GetSection(TrivialJwtOptions.Section));
+----
+
+For instance, the `appsettings.json` can contain the configuration:
+
+[source,json]
+----
+{
+    "TrivialJwt": {
+        "Secret": "U3VwZXJfU2VjcmV0X1Bhc3N3b3JkIQ=="
+    }
+}
+----
+
+## Token generation endpoint
+
+The endpoint is `/auth/login`.
+
+The payload is a JSON file with `username` and `password`.
+
+Example:
+[source,json]
+----
+{
+    "username": "bob",
+    "password": "bob"
+}
+----
+
+The response would be:
+
+[source,json]
+----
+{
+    "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdW...k_Riw4RSK7g",
+    "expires_in": 3600,
+    "token_type": "bearer"
+}
+----
+
+## TODO
+
+- [ ] Support refresh token
+- [ ] support .Net 5.0
+- [ ] Implement elliptic curves
+- [ ] Enhance asymmetric key management
