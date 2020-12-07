@@ -26,6 +26,7 @@ namespace TrivialJwt.Helpers
                 case "HS512":
                     return true;
                 case "RS256":
+                case "RS384":
                 case "RS512":
                 case "ES256":
                 case "ES384":
@@ -36,8 +37,23 @@ namespace TrivialJwt.Helpers
                     return false;
                 default:
                     throw new ArgumentException("Unknown algorithm", nameof(algo));
+            }
 
+        }
 
+        public static bool IsRsa(string algo)
+        {
+            if (string.IsNullOrEmpty(algo))
+                throw new ArgumentException("Algorithm is missing", nameof(algo));
+
+            switch (algo)
+            {
+                case "RS256":
+                case "RS384":
+                case "RS512":
+                    return true;
+                default:
+                    return false;
             }
 
         }

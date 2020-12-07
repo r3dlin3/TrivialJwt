@@ -22,6 +22,16 @@ namespace TrivialJwt
         /// </summary>
         public string SigningAlgorithm { get; set; } = "HS256";
 
+
+        /// <summary>
+        /// Define if the certificate
+        /// Allowed values:  "File", "CertStore"
+        /// </summary>
+        public string CertificateStore { get; set; } = "File";
+        public string CertificatePath { get; set; }
+        public string CertificatePassword { get; set; }
+
+
         /// <summary>
         /// Define if the user is retrieved by mail, username or id.
         /// Allowed values:  "mail", "name" or "id"

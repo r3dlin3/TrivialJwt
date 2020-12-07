@@ -18,4 +18,10 @@
     <ProjectReference Include="..\TrivialJwt\TrivialJwt.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="certificate.p12">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
