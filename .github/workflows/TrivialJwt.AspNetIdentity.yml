@@ -33,5 +33,5 @@ jobs:
     - name: Pack
       run: dotnet pack --configuration Release --no-restore -o $SRC_PATH/pack $SRC_PATH/*.csproj 
     - name: Push to nuget
-      run: dotnet nuget push '$SRC_PATH/pack/*.nupkg' --api-key '${{secrets.NUGET_KEY}}' --source https://api.nuget.org/v3/index.json 
+      run: dotnet nuget push "$SRC_PATH/pack/*.nupkg" --api-key '${{secrets.NUGET_KEY}}' --source https://api.nuget.org/v3/index.json 
       
