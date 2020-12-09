@@ -30,11 +30,14 @@ namespace TrivialJwt.Bearer
                     {
                         ValidateIssuer = true,
                         ValidateAudience = true,
+                        RequireExpirationTime = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         IssuerValidator = issuerValidator.IssuerValidator,
                         AudienceValidator = issuerValidator.AudienceValidator,
-                        IssuerSigningKey = securityKey
+                        IssuerSigningKey = securityKey,
+                        //ValidAlgorithms = new string[] { _options.SigningAlgorithm },
+                        //ClockSkew = new TimeSpan(0, 0, _options.ClockSkew),
                     };
                 });
             }

@@ -4,7 +4,8 @@ using System.Text;
 
 namespace TrivialJwt
 {
-    public class TrivialJwtOptions
+    public class 
+        TrivialJwtOptions
     {
         public const string Section = "TrivialJwt";
 
@@ -38,8 +39,25 @@ namespace TrivialJwt
         /// </summary>
         public string MethodRetrieval { get; set; }
 
+        /// <summary>
+        /// By default, issue a Refresh Token
+        /// </summary>
+        public bool IssueRefreshToken { get; set; } = true;
 
+        /// <summary>
+        /// Issue a new Refresh Token each time an access token is issued
+        /// </summary>
+        public bool EnableRefreshTokenRotation { get; set; }
+        /// <summary>
+        /// Validity of a refresh token for which an access token can be used in seconds
+        /// By default, 8 hours.
+        /// </summary>
+        public int RefreshTokenLifetime { get; set; } = 28800;
 
-
+        /// <summary>
+        /// Maximum period of time a Refresh Token can be renewed in second
+        /// By default, -1, which means there is no max time
+        /// </summary>
+        public int RefreshTokenMaxLifetime { get; set; } = -1;
     }
 }

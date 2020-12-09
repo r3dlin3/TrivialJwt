@@ -12,9 +12,15 @@ namespace TrivialJwt
             public const string StoreBased = "store";
             
         }
-        public static class ClaimTypes
+
+        public static class ClaimType
         {
-            public const string Sub = "sub";
+            public const string TokenType = "typ";
+        }
+        public static class TokenType
+        {
+            public const string AccessToken = "at";
+            public const string RefreshToken = "rt";
         }
     }
 }

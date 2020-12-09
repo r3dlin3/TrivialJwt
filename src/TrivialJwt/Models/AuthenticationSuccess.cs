@@ -6,13 +6,17 @@ namespace TrivialJwt.Models
 {
     public class AuthenticationSuccess : IAuthenticationResult
     {
-        private string username;
-        public AuthenticationSuccess(string username)
+        private string _username;
+        private DateTime? _authTime;
+        public AuthenticationSuccess(string username, DateTime? authTime = null)
         {
-            this.username = username;
+            this._username = username;
+            _authTime = authTime;
         }
 
-        public string GetUsername() => username;
+        public DateTime? AuthenticationTime() => _authTime;
+
+        public string GetUsername() => _username;
         public bool IsError() => false;
     }
 }

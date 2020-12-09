@@ -19,9 +19,6 @@ It relies on Microsoft's libraries for JWT generation.
 
 ## How to use `TrivialJWT` with AspNetIdentity
 
-In this example, `AppUser`
-
-
 ### Install dependencies
 
 With .NET CLI
@@ -52,13 +49,15 @@ using TrivialJwt.Bearer;
 public void ConfigureServices(IServiceCollection services)
 {
     (...)
-    services.AddTrivialJwtAspNetIdentity<IdentityUser>(options =>
+
+    services.AddTrivialJwtAspNetIdentity<AppUser>(options =>
             {
                 options.Secret = "<Base64Secret>"
             });
 
     services.AddTrivialJwtAuthentication();
-    services.AddRazorPages();
+    
+    (...)
 }
 
 public void Configure(IApplicationBuilder app, 
@@ -73,9 +72,67 @@ public void Configure(IApplicationBuilder app,
 }
 ```
 
+## How to use `TrivialJWT` without AspNetIdentity
+
+### Install dependencies
+
+With .NET CLI
+
+```bash
+dotnet add package TrivialJwt.Bearer
+```
+
+or with Package Manager:
+
+```bash
+Install-Package TrivialJwt.Bearer
+```
+
+### Update `Startup.cs`
+
+In the example below, a HMAC-SHA265 signature
+
+```csharp
+(...)
+using TrivialJwt;
+using TrivialJwt.Bearer;
+(...)
+
+public void ConfigureServices(IServiceCollection services)
+{
+    (...)
+
+    services.AddTrivialJwt(options =>
+            {
+                options.Secret = "<Base64Secret>"
+            });
+
+    services.AddTrivialJwtAuthentication();
+
+    services.AddScoped<IPasswordValidator, PasswordValidator>();
+    services.AddScoped<IClaimsIdentityProvider, ClaimsIdentityProvider>();
+
+    (...)
+}
+
+public void Configure(IApplicationBuilder app, 
+                IWebHostEnvironment env)
+{
+    (...)
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    (...)
+}
+```
+
+An implementation for [`IPasswordValidator`](src/TrivialJwt/Services/IPasswordValidator.cs) and [`IClaimsIdentityProvider`](src/TrivialJwt/Services/IClaimsIdentityProvider.cs) must be provided.
+
 ## Configuration
 
-Configuration can be done by using options as shown above or by binding
+Configuration can be done by using options as shown above or by binding:
+
 ```csharp
 services.AddTrivialJwtAspNetIdentity<IdentityUser>(
     Configuration.GetSection(TrivialJwtOptions.Section));
@@ -91,13 +148,16 @@ For instance, the `appsettings.json` can contain the configuration:
 }
 ```
 
-## Token generation endpoint
+## Endpoints
+
+### Token generation endpoint
 
 The endpoint is `/auth/login`.
 
-The payload is a JSON file with `username` and `password`.
+The payload is a JSON with `username` and `password`.
 
 Example:
+
 ```json
 {
     "username": "bob",
@@ -110,14 +170,54 @@ The response would be:
 ```json
 {
     "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdW...k_Riw4RSK7g",
+    "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdW...k_Riw4RSK7g",
     "expires_in": 3600,
     "token_type": "bearer"
 }
 ```
 
+### Refresh token endpoint
+
+The endpoint is `/auth/refresh_token`.
+
+The payload is a JSON file with `refresh_token`.
+
+Example:
+
+```json
+{
+    "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdW...k_Riw4RSK7g"
+}
+```
+
+The response would be:
+
+```json
+{
+    "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdW...k_Riw4RSK7g",
+    "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdW...k_Riw4RSK7g",
+    "expires_in": 3600,
+    "token_type": "bearer"
+}
+```
+
+### Refresh Token endpoint
+
+The endpoint is `/auth/refreshtoken`.
+
+The payload is a JSON file with `username` and `password`.
+
+Example:
+
+```json
+{
+    "username": "bob",
+    "password": "bob"
+}
+```
+
 ## TODO
 
-- [ ] Support refresh token
 - [ ] support .Net 5.0
 - [ ] Implement elliptic curves
 - [ ] Enhance asymmetric key management

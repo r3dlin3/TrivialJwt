@@ -15,19 +15,22 @@ namespace TrivialJwt.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly  IPasswordValidator _passwordChecker;
-        private readonly  IClaimsIdentityProvider _claimsIdentityProvider;
-        private readonly  ITokenService _tokenService;
+        private readonly IPasswordValidator _passwordChecker;
+        private readonly IClaimsIdentityProvider _claimsIdentityProvider;
+        private readonly ITokenService _tokenService;
         private readonly TrivialJwtOptions _options;
+        private readonly ITokenValidatorService _tokenValidator;
 
-        public AuthController(IPasswordValidator passwordChecker, 
-            IClaimsIdentityProvider claimsIdentityProvider, 
-            ITokenService tokenService, IOptions<TrivialJwtOptions> options)
+
+        public AuthController(IPasswordValidator passwordChecker,
+            IClaimsIdentityProvider claimsIdentityProvider,
+            ITokenService tokenService, IOptions<TrivialJwtOptions> options, ITokenValidatorService tokenValidator)
         {
             _passwordChecker = passwordChecker;
             _claimsIdentityProvider = claimsIdentityProvider;
             _tokenService = tokenService;
             _options = options.Value;
+            _tokenValidator = tokenValidator;
         }
 
 
@@ -41,9 +44,40 @@ namespace TrivialJwt.Controllers
 
             ClaimsIdentity user = await _claimsIdentityProvider.CreateAsync(result.GetUsername());
             string token = await _tokenService.GenerateTokenAsync(user);
-            var response = new TokenResponse() { 
+
+            var response = new TokenResponse()
+            {
                 AccessToken = token,
                 AccessTokenLifetime = _options.AccessTokenLifetime,
+            };
+
+            if (_options.IssueRefreshToken)
+            {
+                response.RefreshToken = await _tokenService.GenerateRefreshTokenAsync(user, DateTime.UtcNow);
+            }
+
+            return new TokenResult(response);
+        }
+
+        [HttpPost("refresh_token")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RefreshToken(RefreshTokenModel model)
+        {
+            if (!_options.IssueRefreshToken)
+                return BadRequest();
+
+            IAuthenticationResult result = await _tokenValidator.ValidateRefreshTokenAsync(model.refresh_token);
+            if (result.IsError())
+                return new UnauthorizedResult();
+
+            ClaimsIdentity user = await _claimsIdentityProvider.CreateAsync(result.GetUsername());
+            string token = await _tokenService.GenerateTokenAsync(user);
+            string refreshToken = await _tokenService.GenerateTokenAsync(user);
+            var response = new TokenResponse()
+            {
+                AccessToken = token,
+                AccessTokenLifetime = _options.AccessTokenLifetime,
+                RefreshToken = refreshToken
             };
             return new TokenResult(response);
         }

@@ -16,6 +16,7 @@ namespace TrivialJwt.Extensions
             services.AddScoped<IIssuerService, DefaultIssuerService>();
             services.AddScoped<ICredentialService, DefaultCredentialService>();
             services.AddScoped<ITokenService, DefaultTokenService>();
+            services.AddScoped<ITokenValidatorService, DefaultTokenValidatorService>();
             services.AddMvcCore()
                 .AddApplicationPart(Assembly.Load(typeof(ServicesConfiguration).Assembly.GetName()));   
             return services;

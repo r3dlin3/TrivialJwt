@@ -8,6 +8,8 @@ namespace TrivialJwt.Services
 {
     public interface ITokenService
     {
+        Task<string> GenerateRefreshTokenAsync(ClaimsIdentity user, DateTime authTime);
         Task<string> GenerateTokenAsync(ClaimsIdentity user);
+        Task<string> GenerateTokenAsync(ClaimsIdentity user, DateTime authTime);
     }
 }

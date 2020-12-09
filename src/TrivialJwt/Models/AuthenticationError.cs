@@ -10,5 +10,6 @@ namespace TrivialJwt.Models
         }
 
         public bool IsError() => true;
+        public DateTime? AuthenticationTime() => null;
     }
 }

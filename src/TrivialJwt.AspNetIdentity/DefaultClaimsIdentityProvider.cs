@@ -2,6 +2,7 @@
 using TrivialJwt.Services;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace TrivialJwt.AspNetIdentity
 {
@@ -22,7 +23,7 @@ namespace TrivialJwt.AspNetIdentity
             var identity = new ClaimsIdentity();
 
             var user = await _userManager.FindByIdAsync(subject);
-            identity.AddClaim(new Claim(Constants.ClaimTypes.Sub, subject));
+            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Sub, subject));
 
             identity.AddClaims(_claimsProvider.GetClaims(user));
 
