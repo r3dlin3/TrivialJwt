@@ -8,10 +8,13 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using Microsoft.AspNetCore.Http;
 
 namespace TrivialJwt.Controllers
 {
     [Route("[controller]")]
+    [Produces("application/json")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -35,6 +38,9 @@ namespace TrivialJwt.Controllers
 
 
         [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(TokenResult.ResultDto), 200)]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginModel model)
         {
@@ -61,6 +67,9 @@ namespace TrivialJwt.Controllers
 
         [HttpPost("refresh_token")]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(TokenResult.ResultDto), 200)]
         public async Task<IActionResult> RefreshToken(RefreshTokenModel model)
         {
             if (!_options.IssueRefreshToken)

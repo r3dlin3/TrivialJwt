@@ -112,9 +112,6 @@ namespace TrivialJwt.Tests
             jToken = JToken.Parse(responseString);
             Assert.NotNull(jToken.access_token);
             Assert.NotNull(jToken.refresh_token);
-
-
-
         }
 
 
